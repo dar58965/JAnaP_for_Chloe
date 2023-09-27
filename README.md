@@ -13,7 +13,7 @@ https://docs.docker.com/desktop/install/windows-install/
 
 ### Make sure WSL 2 is turned on as backend to allow Docker to use Linux distros as base image
 
-### Open Windows Powershell
+### Open Windows Powershell or cmd
 
 ## Git clone Docker image
 ```

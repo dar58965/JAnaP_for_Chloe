@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get install -y python2.7 && \
     apt-get install -y wget && \
     apt-get install -y unzip && \
-    apt-get install -y curl \
+    apt-get install -y curl &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
