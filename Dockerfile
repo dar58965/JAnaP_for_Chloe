@@ -17,14 +17,10 @@ RUN mkdir -p /app/bin/packages
 RUN wget -P /app/bin/packages https://s3.amazonaws.com/umd-cells/packages/ij150-linux64-java8.zip && \
     unzip /app/bin/packages/ij150-linux64-java8.zip -d /app/bin/packages
 
-#Gather requirements.txt for pip installs
+#Gather requirements.txt for pip installs and installs using dep pip
 COPY bin/requirements.txt .
 RUN pip install -r requirements.txt /app/tmp/requirements.txt && \
     rm -f /app/tmp/requirements.txt
-
-
-#Documentation keep
-COPY "JAnaP User Guide_v1.2_190625.pdf" /app/
 
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
