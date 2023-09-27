@@ -9,29 +9,32 @@ https://docs.docker.com/desktop/install/windows-install/
 ### Open Windows Powershell
 
 ## Git clone Docker image
-'''
+```
+
+
 git clone https://github.com/dar58965/JAnaP_for_Chloe.git DockerfileRepo
 
 cd DockerfileRepo
-'''
+``
 
 ## Docker build command. Creates docker image
-'''
+```
 docker build -t janap-jupyter-linux .
-'''
+```
+
 ## Git Clone original repo
-'''
+``
 cd ..
 
 git clone https://github.com/StrokaLab/JAnaP.git JAnaP
 
 cd JAnaP
-'''
+```
 
 #### Basically, this command initializes the docker image and connects Port 4000 of host computer with Port 80 of Docker. Bind mount
-'''
+```
 docker run --build-arg UBUNTU_VERSION={VERSION NUMBER HERE} -v $(pwd):/JAnaP -p 4000:80 janap-jupyter-linux
-'''
+```
 
 # Notes
 directory structure: 
