@@ -8,6 +8,7 @@ LABEL maintainer="Chloe Kaplan"
 RUN apt-get update && \
     apt-get install -y python2.7 python-pip && \
     apt-get install -y wget && \
+    apt-get install -y unzip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
