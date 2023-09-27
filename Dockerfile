@@ -28,7 +28,7 @@ RUN wget -P /app/bin/packages https://s3.amazonaws.com/umd-cells/packages/ij150-
 
 #Gather requirements.txt for pip installs and installs using dep pip
 COPY bin/requirements.txt .
-RUN pip install -r requirements.txt /app/tmp/requirements.txt && \
+RUN pip install -r requirements.txt /bin/requirements.txt && \
     rm -f /app/tmp/requirements.txt
 
 #Jupyter notebook step
