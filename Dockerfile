@@ -6,9 +6,10 @@ LABEL maintainer="Chloe Kaplan"
 #Can not run apt-get install and upgrade to get latest versions cuz deprecated python. 
 #apt-get clean + rm -rf var capabilities makes it lighter
 RUN apt-get update && \
-    apt-get install -y python2.7 python-pip && \
+    apt-get install -y python2.7 && \
     apt-get install -y wget && \
     apt-get install -y unzip && \
+    apt-get install -y python-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
