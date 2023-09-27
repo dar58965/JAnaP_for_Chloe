@@ -19,7 +19,7 @@ RUN mkdir -p /app/bin/packages
 
 #Gather legacy pip and rebuild
 RUN curl -fsSL -O https://bootstrap.pypa.io/pip/2.7/get-pip.py
-RUN python get-pip.py --no-python-version-warning && rm -f get-pip.py && apt-get clean
+RUN python2.7 get-pip.py --no-python-version-warning && rm -f get-pip.py && apt-get clean
 
 
 #Gather JAnaP from the og babes and place in packages folder
