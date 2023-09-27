@@ -1,5 +1,5 @@
 #Ubuntu version placeholder
-FROM Ubuntu:22.04
+FROM ubuntu:22.04
 
 LABEL maintainer="Chloe Kaplan"
 
