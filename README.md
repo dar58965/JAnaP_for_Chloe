@@ -1,4 +1,5 @@
 # Run Instructions 
+These directions assume Windows Powershell 6+
 
 |Make sure Git and Docker are installed on machine. All machines need them anyways.|
 ```
@@ -25,6 +26,8 @@ cd JAnaP_Ubuntu_Docker
 
 ## Docker build command. Creates docker image
 ```
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/StrokaLab/JAnaP/master/bin/requirements.txt" -OutFile "PSrequirements.txt"
+
 docker build -t janap-jupyter-linux .
 ```
 
