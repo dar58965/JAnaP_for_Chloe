@@ -40,7 +40,7 @@ cd JAnaP
 
 #### Basically, this command initializes the docker image and connects Port 4000 of host computer with Port 80 of Docker. Bind mount
 ```
-docker run --build-arg UBUNTU_VERSION={VERSION NUMBER HERE} -v $(pwd):/JAnaP -p 4000:80 janap-jupyter-linux
+docker run -v $(pwd):/JAnaP -p 4000:80 janap-jupyter-linux
 ```
 
 # Notes
@@ -55,4 +55,4 @@ directory structure:
 Build Progress:
     FROM built
     LABEL built
-    RUN 3/8
+    RUN 5/8
