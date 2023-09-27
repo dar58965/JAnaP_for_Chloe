@@ -1,6 +1,7 @@
 #Standard ignores. Got from Stack Exchange
 .git
 .gitignore
+.gitattributes
 .svn
 .hg
 
