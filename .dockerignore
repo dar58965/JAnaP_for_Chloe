@@ -1,0 +1,18 @@
+#Standard ignores. Got from Stack Exchange
+.git
+.gitignore
+.svn
+.hg
+
+#Temporary files. Also Stack lols
+*.log
+*.bak
+*.swp
+__pycache__
+*.pyc
+*.pyo
+
+#Remove venv
+venv/
+*.gem
+

@@ -14,22 +14,26 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 #Create directory structure for the application
-RUN mkdir -p /app/bin/scripts /app/input_folder /app/output_folder /app/bin/packages
+RUN mkdir -p /app/bin/packages
 
 #Gather JAnaP from the og babes and place in packages folder
 RUN wget -P /app/bin/packages https://s3.amazonaws.com/umd-cells/packages/ij150-linux64-java8.zip && \
     unzip /app/bin/packages/ij150-linux64-java8.zip -d /app/bin/packages
-
-#Get the script for the junction analyzer programs
-COPY scripts/process-images.jim /app/bin/scripts/
 
 #Gather requirements.txt for pip installs
 COPY bin/requirements.txt .
 RUN pip install -r requirements.txt /app/tmp/requirements.txt && \
     rm -f /app/tmp/requirements.txt
 
-#Establish working directory
-WORKDIR /scripts
 
-#Run ImageJ script
-CMD ["ij", "batch", "/scripts/process-images.jim", "/input_folder", "/output_folder"]
+#Documentation keep
+COPY "JAnaP User Guide_v1.2_190625.pdf" /app/
+
+#Jupyter notebook step
+RUN jupyter nbextension enable --py widgetsnbextension
+
+#Establish working directory
+WORKDIR /JAnaP/web
+
+#Run initialize script
+CMD ["python", "application.py"]

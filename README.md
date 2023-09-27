@@ -1,12 +1,16 @@
 # Run Instructions 
 
+### Open ubuntu linux
+
+## Git Clone original repo
+- git clone https://github.com/StrokaLab/JAnaP.git JAnaP
+- cd JAnaP
+
 ## Docker build command
 - docker build -t janap-jupyter-linux .
 
-## Run Docker command with input folder and output dir as arguments
-
-#### Basically, this command initializes the docker image and adds two volume mounts: the input dir and the output dir
-- docker run -v /path/:/input_folder -v /path/:/output_folder -it janap-jupyter-linux
+#### Basically, this command initializes the docker image and connects Port 4000 of host computer with Port 80 of Docker
+- docker run -v $(pwd):/JAnaP -p 4000:80 janap-jupyter-linux
 
 
 # Notes
