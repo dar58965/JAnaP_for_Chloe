@@ -1,8 +1,5 @@
 #Ubuntu version placeholder
-
-ARG UBUNTU_VERSION=18.04
-
-FROM Ubuntu:$(UBUNTU_VERSION)
+FROM Ubuntu:22.04
 
 LABEL maintainer="Chloe Kaplan"
 

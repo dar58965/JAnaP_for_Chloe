@@ -1,6 +1,12 @@
 # Run Instructions 
 
 |Make sure Git and Docker are installed on machine. All machines need them anyways.|
+```
+git --version
+docker --version
+```
+
+Git and Docker distributions:
 https://gitforwindows.org/
 https://docs.docker.com/desktop/install/windows-install/
 
@@ -10,10 +16,12 @@ https://docs.docker.com/desktop/install/windows-install/
 
 ## Git clone Docker image
 ```
-git clone https://github.com/dar58965/JAnaP_for_Chloe.git DockerfileRepo
+git clone https://github.com/dar58965/JAnaP_for_Chloe.git JAnaP_Ubuntu_Docker
 
-cd DockerfileRepo
+cd JAnaP_Ubuntu_Docker
 ```
+
+#### Start Docker Engine by opening desktop application
 
 ## Docker build command. Creates docker image
 ```
