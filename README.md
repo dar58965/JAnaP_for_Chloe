@@ -26,8 +26,6 @@ cd JAnaP_Ubuntu_Docker
 
 ## Docker build command. Creates docker image
 ```
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/StrokaLab/JAnaP/master/bin/requirements.txt" -OutFile "PSrequirements.txt"
-
 docker build -t janap-jupyter-linux .
 ```
 
@@ -52,3 +50,9 @@ directory structure:
 //bin/scripts //bin/packages
 
 ## Because the Docker image uses Ubuntu as a base image, the software can be run from Windows Powershell without any need for WSL Ubuntu. Just run it from the Powershell. 
+
+
+Build Progress:
+    FROM built
+    LABEL built
+    RUN 3/8

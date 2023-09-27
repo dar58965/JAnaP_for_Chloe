@@ -7,6 +7,7 @@ LABEL maintainer="Chloe Kaplan"
 #apt-get clean + rm -rf var capabilities makes it lighter
 RUN apt-get update && \
     apt-get install -y python2.7 python-pip && \
+    apt-get install -y wget && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
