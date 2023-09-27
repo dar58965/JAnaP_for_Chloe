@@ -27,9 +27,9 @@ RUN wget -P /app/bin/packages https://s3.amazonaws.com/umd-cells/packages/ij150-
     unzip /app/bin/packages/ij150-linux64-java8.zip -d /app/bin/packages
 
 #Gather requirements.txt for pip installs and installs using dep pip
-COPY bin/requirements.txt .
-RUN pip install -r requirements.txt /bin/requirements.txt && \
-    rm -f /app/tmp/requirements.txt
+COPY requirements.txt .
+RUN pip install -r requirements.txt && \
+    rm -f requirements.txt
 
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
