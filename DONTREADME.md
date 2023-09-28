@@ -17,3 +17,8 @@ People I cheated off of:
 ```
 https://stackoverflow.com/questions/65900292/how-can-i-install-a-legacy-pip-version-with-python-2-6-6-or-python-2-7-5
 ```
+- For legacy wheel configurations
+```
+https://stackoverflow.com/questions/31573107/how-to-create-a-pure-python-wheel
+```
+
