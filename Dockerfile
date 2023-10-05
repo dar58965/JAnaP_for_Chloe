@@ -11,8 +11,8 @@ RUN apt-get update && \
     apt-get install -y wget && \
     apt-get install -y unzip && \
     apt-get install -y curl &&\
+    apt-get install -y g++-multilib &&\
     apt-get clean && \
-    apt-get install -y g++-multilib \
     rm -rf /var/lib/apt/lists/*
 
 
