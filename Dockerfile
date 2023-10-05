@@ -13,6 +13,7 @@ RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y python2.7-dev && \
     apt-get install -y g++-multilib && \
+    apt-get install -y libglib2.0.0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -41,5 +42,3 @@ RUN jupyter nbextension enable --py widgetsnbextension
 EXPOSE 5000
 #Establish working directory
 WORKDIR /app
-
-CMD ["python2.7", "JAnaP-master/web/application.py"]
