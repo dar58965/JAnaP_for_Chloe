@@ -19,7 +19,7 @@ https://docs.docker.com/desktop/install/windows-install/
 ```
 git clone https://github.com/dar58965/JAnaP_for_Chloe.git janap-ubuntu-docker
 
-cd JAnaP_Ubuntu_Docker
+cd janap-ubuntu-docker
 ```
 
 #### Start Docker Engine by opening desktop application
@@ -35,10 +35,10 @@ cd ..
 
 git clone https://github.com/StrokaLab/JAnaP.git JAnaP
 
-cd JAnaP
+cd janap-ubuntu-docker
 ```
 
 #### Basically, this command initializes the docker image and connects Port 4000 of host computer with Port 80 of Docker. Bind mount
 ```
-docker run -v $(pwd):/JAnaP -p 4000:80 janap-jupyter-linux
+docker run -p 5000:5000 -v C:/Users/dar58/JAnaP-master:/app janap-jupyter-linux
 ```
