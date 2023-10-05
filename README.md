@@ -42,17 +42,3 @@ cd JAnaP
 ```
 docker run -v $(pwd):/JAnaP -p 4000:80 janap-jupyter-linux
 ```
-
-# Notes
-directory structure: 
-/app
-//bin //input_folder //output_folder 
-//bin/scripts //bin/packages
-
-## Because the Docker image uses Ubuntu as a base image, the software can be run from Windows Powershell without any need for WSL Ubuntu. Just run it from the Powershell. 
-
-
-Build Progress:
-    FROM built
-    LABEL built
-    RUN 5/8

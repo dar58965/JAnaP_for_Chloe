@@ -325,7 +325,6 @@ C:\Users\dar58\JAnaP_Ubuntu_Docker>docker build -t janap-jupyter-linux .
 108.9   creating build/temp.linux-x86_64-2.7/mahotas
 108.9   x86_64-linux-gnu-gcc -fno-strict-aliasing -Wdate-time -D_FORTIFY_SOURCE=2 -g -ffile-prefix-map=/build/python2.7-W40Ff2/python2.7-2.7.18=. -flto=auto -ffat-lto-objects -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security -fPIC -DNPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION-DPY_ARRAY_UNIQUE_SYMBOL=Mahotas_PyArray_API_Symbol -I[] -I/usr/include/python2.7 -c mahotas/_histogram.cpp -o build/temp.linux-x86_64-2.7/mahotas/_histogram.o
 108.9   unable to execute 'x86_64-linux-gnu-gcc': No such file or directory
-108.9   error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
 108.9   ----------------------------------------
 108.9   ERROR: Failed building wheel for mahotas
 108.9   Running setup.py clean for mahotas

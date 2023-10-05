@@ -4,6 +4,7 @@ FROM ubuntu:22.04
 LABEL maintainer="Chloe Kaplan"
 
 #Gather necessary functionality for image build. 
+#g++-multilib is C++ compiler for mahotas wheel configurations
 #apt-get clean + rm -rf var capabilities makes it lighter
 RUN apt-get update && \
     apt-get install -y python2.7 && \
@@ -11,6 +12,7 @@ RUN apt-get update && \
     apt-get install -y unzip && \
     apt-get install -y curl &&\
     apt-get clean && \
+    apt-get install -y g++-multilib \
     rm -rf /var/lib/apt/lists/*
 
 
