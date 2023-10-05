@@ -29,6 +29,8 @@ RUN python2.7 get-pip.py --no-python-version-warning && rm -f get-pip.py && apt-
 RUN wget -P /app/bin/packages https://s3.amazonaws.com/umd-cells/packages/ij150-linux64-java8.zip && \
     unzip /app/bin/packages/ij150-linux64-java8.zip -d /app/bin/packages
 
+ENV PATH=""
+
 #Gather requirements.txt for pip installs and installs using dep pip
 COPY requirements.txt .
 RUN pip install -r requirements.txt && \
@@ -40,5 +42,4 @@ RUN jupyter nbextension enable --py widgetsnbextension
 #Establish working directory
 WORKDIR /JAnaP/web
 
-#Run initialize script
-CMD ["python", "application.py"]
+CMD ["python2.7", "web/application.py"]
