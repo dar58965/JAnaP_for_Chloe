@@ -19,6 +19,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && \
+    apt-get install -y libxext6 && \
+    apt-get install -y libgl1-mesa-glx && \
+    apt-get install -y libgtk2.0-0 && \
+    apt-get clean
 
 #Create directory structure for the application
 RUN mkdir -p /app/bin/packages
