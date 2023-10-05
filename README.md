@@ -17,7 +17,7 @@ https://docs.docker.com/desktop/install/windows-install/
 
 ## Git clone Docker image
 ```
-git clone https://github.com/dar58965/JAnaP_for_Chloe.git janap_ubuntu_docker
+git clone https://github.com/dar58965/JAnaP_for_Chloe.git janap-ubuntu-docker
 
 cd JAnaP_Ubuntu_Docker
 ```

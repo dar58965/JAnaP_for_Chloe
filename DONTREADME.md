@@ -18,7 +18,7 @@ Build Progress:
     FROM built \
     LABEL built \
     RUN 12/15 \
-    RUN *past pip* 
+    RUN *past pip* Lol kind of. Should isolate packages that require C++ compiler. 
 
 People I cheated off of:
 - For legacy pip
