@@ -38,7 +38,8 @@ RUN pip install -r requirements.txt && \
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
 
+EXPOSE 5000
 #Establish working directory
-WORKDIR /JAnaP/web
+WORKDIR /app
 
-CMD ["python2.7", "web/application.py"]
+CMD ["python2.7", "JAnaP-master/web/application.py"]
