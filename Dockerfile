@@ -25,6 +25,10 @@ RUN apt-get update && \
     apt-get install -y libgtk2.0-0 && \
     apt-get clean
 
+RUN apt-get update && \
+    apt-get install -y python-tk && \
+    apt-get clean
+
 #Create directory structure for the application
 RUN mkdir -p /app/bin/packages
 
