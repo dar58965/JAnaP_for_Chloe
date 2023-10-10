@@ -54,4 +54,4 @@ EXPOSE 5000
 
 WORKDIR /web
 
-CMD ["python2.7","-m", "application.py"]
+#CMD ["python2.7","-m", "application.py"]
