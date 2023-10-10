@@ -47,8 +47,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt && \
     rm -f requirements.txt
 
-RUN mkdir -p /app
-COPY JAnaP-1.1 .
+COPY JAnaP-1.1 /app/
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
 
