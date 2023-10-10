@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    {% include 'projects/_header.html' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h4></h4>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dimension Configuration</h3>
+                </div>
+                <form method="post" onsubmit="return saveDimension()" action="/projects/{{ project.hash }}/dimensions/{{ dimension.name }}" class="form-horizontal">
+
+                    <input type="hidden" name="data" id="data" value="" />
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Dimension Name</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">{{ dimension.name }}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Dimension Type</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">{{ dimension.type }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% if (dimension.type == "String Match") %}
+
+                <table class="table" id="string-match-data">
+                    <thead>
+                    <tr>
+                        <td></td>
+                        <td>Needle Tokens</td>
+                        <td></td>
+                        <td>Map To Value</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in dimension.data %}
+                        <tr>
+                            <td style="width: 5%; text-align: center; vertical-align: middle;">
+                                <i class="fa fa-bars"></i>
+                            </td>
+                            <td style="width: 50%; vertical-align: middle;">
+                                <select class="form-control needle-tokens" multiple="multiple">
+                                    {% for token in row.get("tokens", []) %}
+                                    <option selected="selected">{{ token }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td style="width: 10%; text-align: center; vertical-align: middle;">
+                                <i class="fa fa-arrow-right"></i>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <input type="text" class="form-control map-value" value="{{ row.get("value") }}">
+                            </td>
+                            <td style="width: 5%; text-align: center; vertical-align: middle;">
+                                <a href="#" onclick="deleteRow(this);">
+                                    <i class="fa fa-times-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">
+                            <a href="#" onclick="addRow();">
+                                <small>Add Row</small>
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+                {% endif %}
+
+                <div class="panel-footer" style="text-align: center;">
+                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                    <button type="submit" class="btn btn-danger" name="action" value="delete" onclick="return confirm('Are you sure you want to delete this dimension?');">Delete</button>
+                </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+<script id="row-template" type="text/x-custom-template">
+    <tr>
+        <td style="width: 5%; text-align: center; vertical-align: middle;">
+            <i class="fa fa-bars"></i>
+        </td>
+        <td style="width: 50%; vertical-align: middle;">
+            <select class="form-control needle-tokens" multiple="multiple">
+            </select>
+        </td>
+        <td style="width: 10%; text-align: center; vertical-align: middle;">
+            <i class="fa fa-arrow-right"></i>
+        </td>
+        <td style="vertical-align: middle;">
+            <input type="text" class="form-control map-value">
+        </td>
+        <td style="width: 5%; text-align: center; vertical-align: middle;">
+            <a href="#" onclick="deleteRow(this);">
+                <i class="fa fa-times-circle"></i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+<script>
+
+    function addRow() {
+        $('#string-match-data tbody').append(
+            $("#row-template").html()
+        );
+        $(".needle-tokens").select2({
+            tags: true,
+            tokenSeparators: [',']
+        });
+    }
+
+    function deleteRow(cell) {
+        $(cell).parent().parent().fadeOut("normal", function() {
+            $(cell).parent().parent().remove();
+        });
+    }
+
+    function saveDimension() {
+
+        var data = [];
+
+        $('#string-match-data tbody tr').each(function (i, row) {
+            var tokens = $(row).find("select.needle-tokens").first().val();
+
+            if (tokens == null) {
+                tokens = [];
+            }
+
+            var mapValue = $(row).find("input.map-value").first().val();
+
+            data[i] = {
+                "tokens": tokens,
+                "value": mapValue
+            }
+        });
+
+        $("#data").val(JSON.stringify(data));
+
+        return true;
+    }
+
+    $(document).ready(function() {
+        $(".needle-tokens").select2({
+            tags: true,
+            tokenSeparators: [',']
+        });
+    });
+</script>
+
+
+{% endblock %}

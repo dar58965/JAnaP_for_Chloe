@@ -1,0 +1,26 @@
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-12">
+        <p class="text-center">
+            <strong>Waypointing Completed: </strong> This image has been marked as completed which means the waypointing is done. If you need to add/remove sets of waypoints you can reopen this image. 
+        </p>
+
+        <div id="actions_form" style="text-align: center;">
+            <form method="post">
+            
+                <input type="hidden" name="task_hash" id="task_hash" value="{{ task.task_hash }}" />
+                <input type="hidden" name="waypoints" id="waypoints" value="" />
+            
+                <p>
+                    <button type="submit" class="btn btn-danger" id="save" name="task_action" value="reopen">Re-Open Image</button>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <img src="{{ task.image_wp_url }}" class="img-responsive center-block" />
+    </div>
+</div>

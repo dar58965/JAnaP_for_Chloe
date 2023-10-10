@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include 'results/_header.html' %}
+
+<!--
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Image Data</h4>
+
+        <form role="form" method="post" action="/projects/{{ project.hash }}/results/image-file">
+
+            <button type="submit" class="btn btn-primary">Generate New File</button>
+        </form>
+
+    </div>
+</div>
+-->
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Cell Data</h4>
+        {% if output["cell-data-v2"]["status"] == 1 %}
+            <p>Files are being generated</p>
+        {% elif output["cell-data-v2"]["status"] == 2 %}
+            <p>File processing is scheduled</p>
+        {% else %}
+        <form role="form" method="post" action="/projects/{{ project.hash }}/results/generate/cell-data-v2">
+            <button type="submit" class="btn btn-primary">Generate New Cell Data File</button>
+        </form>
+        {% endif %}
+        <ul>
+        {% for filename in output["cell-data-v2"]["files"]: %}
+            <li><a href="/projects/{{ project.hash }}/results/download/cell-data-v2/{{filename}}">{{ filename }}</a></li>
+        {% endfor %}
+        </ul>
+    
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Junction Data</h4>
+        {% if output["fastclass-feature-data-filtered"]["status"] == 1 %}
+            <p>Files are being generated</p>
+        {% elif output["fastclass-feature-data-filtered"]["status"] == 2 %}
+            <p>File processing is scheduled</p>
+        {% else %}
+        <form role="form" method="post" action="/projects/{{ project.hash }}/results/generate/fastclass-feature-data-filtered">
+            <button type="submit" class="btn btn-primary">Generate New File</button>
+        </form>
+        {% endif %}
+
+        <ul>
+        {% for filename in output["fastclass-feature-data-filtered"]["files"]: %}
+            <li><a href="/projects/{{ project.hash }}/results/download/fastclass-feature-data-filtered/{{filename}}">{{ filename }}</a></li>
+        {% endfor %}
+        </ul>
+
+    </div>
+</div>
+
+{% endblock %}

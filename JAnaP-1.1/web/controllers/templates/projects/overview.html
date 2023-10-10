@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    {% include 'projects/_header.html' %}
+
+    <style>
+
+    table.listing > tbody > tr > td:first-child {
+        
+    }
+
+    table.listing > tbody > tr > td:not(:first-child) {
+        width: 20%;
+    }
+
+    table.listing > tbody > tr > th {
+        vertical-align: middle;
+        text-align: right;
+        width: 25%;
+        /*padding-right: 8%;*/
+    }
+
+    table.listing > tbody > tr > td {
+        vertical-align: middle;
+        text-align: center;
+        width: 20%;
+    }
+
+    </style>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Info</h4>
+
+            <table class="table listing">
+                <tbody>
+                    <tr>
+                        <th>Total Images Added:</th>
+                        <td style="width: 5% !important;"><br/><br/></td>
+                        <td></td>
+                        <td>{{project_data['image_count']}}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th>Perimeter Seeding:</th>
+                        <td style="width: 5% !important;"><br/><br/></td>
+                        <td>
+                           Waypoints
+                        </td>
+                        <td>
+                            {{project_data["task_data"].get("progress")}}%
+                        </td>
+                        <td style="text-align: center;">
+                            {% if project_data["task_data"].get("open", 0) > 0 %}
+                                <a href="/projects/{{project['hash']}}/tasks?status=open">{{project_data["task_data"].get("open")}} open tasks</a>
+                            {% endif %}
+                            
+                            {% if project_data["task_data"].get("wip", 0) > 0 %}
+                                <br />
+                                <a href="/projects/{{project['hash']}}/tasks?status=in-progress">{{project_data["task_data"].get("wip")}} in progress tasks</a>
+                            {% endif %}
+                        </td>
+                        
+                    </tr>
+
+                    <tr>
+                        <th>Total Cells:</th>
+                        <td style="width: 5% !important;"><br/><br/></td>
+                        <td></td>
+                        <td>{{project_data['cell_count']}}</td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        
+        
+    </div>
+
+{% endblock %}

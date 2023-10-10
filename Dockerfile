@@ -51,6 +51,7 @@ RUN pip install -r requirements.txt && \
 RUN jupyter nbextension enable --py widgetsnbextension
 
 EXPOSE 5000
-#Establish working directory
 
-#CMD ["python2.7", "application.py"]
+WORKDIR /web
+
+CMD ["python2.7","-m", "application.py"]
