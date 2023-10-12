@@ -1,7 +1,7 @@
 #Ubuntu version placeholder
 FROM ubuntu:22.04
 
-LABEL maintainer="Chloe Kaplan"
+LABEL maintainer="Davide Rossotto"
 
 #Gather necessary functionality for image build. 
 #g++-multilib is C++ compiler for mahotas wheel configurations
