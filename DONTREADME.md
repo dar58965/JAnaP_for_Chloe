@@ -12,7 +12,7 @@ directory structure:
 
 - Prediction: That fucking jupyter line is not going to work. Gonna use default ver., gonna need legacy
 
-- If I can forcefeed pip the ability to interact with 'x86-Linux-gnu-gcc', then it can probably work out. All fucked up wheel configurations are those which rely on C++ compiler
+- If I can forcefeed pip the ability to interact with 'x86-Linux-gnu-gcc', then it can probably work out. All fucked up wheel configurations are those which rely on C++ compiler. 
 
 Build Progress:
     FROM built \

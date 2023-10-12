@@ -31,3 +31,13 @@ docker run -p 5000:5000 janap-jupyter-linux
 ```
 localhost:5000
 ```
+
+# Clean Up When Done
+- Control C to stop application run. Control D to exit from Docker container. 
+
+- ```Docker ps``` to view current images. 
+- To remove remaining unused Docker image: 
+
+```
+docker rmi -f $(docker images -f "dangling=true" -q)
+```
