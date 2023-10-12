@@ -33,10 +33,10 @@ localhost:5000
 ```
 
 # Clean Up When Done
-- Control C to stop application run. Control D to exit from Docker container. 
+- ctrl + C to stop application run. ctrl + D to exit from Docker container. 
 
 - ```Docker ps``` to view current images. 
-- To remove remaining unused Docker image: 
+- To remove remaining unused Docker image and containers: 
 
 ```
 docker rmi -f $(docker images -f "dangling=true" -q)
