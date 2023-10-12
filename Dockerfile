@@ -53,5 +53,5 @@ RUN jupyter nbextension enable --py widgetsnbextension
 
 EXPOSE 5000
 
-WORKDIR /app
-#CMD ["python2.7","-m", "application.py"]
+WORKDIR /app/web
+CMD ["python2.7","application.py"]

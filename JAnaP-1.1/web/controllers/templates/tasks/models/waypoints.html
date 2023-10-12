@@ -1,0 +1,36 @@
+
+
+<style type="text/css" media="screen">
+    canvas { display:block; margin:1em auto; background:#fff; border:1px solid #ccc }
+</style>
+
+<div class="row">
+    <div class="col-sm-12">
+        <a href="/projects/{{ project.hash }}/tasks"><--- Go Back to Task List</a>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-12">
+        <h4>{{ task.image_name }}</h4>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="{{ 'active' if view_type == 'waypoints' }}"><a href="/projects/{{ project.hash }}/tasks/{{ task.hash }}">Waypointing</a></li>
+            <li role="presentation" class="{{ 'active' if view_type == 'review' }}"><a href="/projects/{{ project.hash }}/tasks/{{ task.hash }}?vt=review">Review Cells</a></li>
+        </ul>
+    </div>
+</div>
+
+{% if view_type == "waypoints" %}
+    {% if task.status == "complete" %}
+        {% include 'tasks/models/waypoints-closed.html' %}
+    {% else %}
+        {% include 'tasks/models/waypoints-editable.html' %}
+    {% endif %}
+{% elif view_type == "review" %}
+    {% include 'tasks/models/waypoints-review.html' %}
+{% endif %}

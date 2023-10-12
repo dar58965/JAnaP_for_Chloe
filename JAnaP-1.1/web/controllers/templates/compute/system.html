@@ -1,0 +1,95 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include 'compute/_header.html' %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>System Management</h4>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Job Information</h3>
+            </div>
+            <div class="panel-body">
+                Last Worker Thread Heartbeat: {{ operation_data.heartbeat }} ({{ operation_data.heartbeat_elapsed}}s ago)
+            </div>
+
+            <form method="post" action="/projects/{{ project.hash }}/config/jobs">
+
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+                    <th>Is Active</th>
+                    <th>Limit Jobs</th>
+                    <th>Only Starred</th>
+                </tr>
+
+                {% for job_config_line in job_configs: %}
+                <tr>
+
+                    <td><code>{{ job_config_line.job_type_name }}</code></td>
+                    <td>{{ operation_data[job_config_line.job_type_name]["done"] }} / {{ operation_data[job_config_line.job_type_name]["total"] }} </td>
+                    <td>avg: {{ operation_data[job_config_line.job_type_name]["avg_time"] }}s/job <br />
+                        total cpu time: {{ operation_data[job_config_line.job_type_name]["cpu_time"] }}s</td>
+
+                    <td style="vertical-align: middle;">
+                        {% if job_config_line.is_active %}
+                            <i class="fa fa-check text-success"></i>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <select class="form-control" name="is_active-{{ job_config_line.job_type_name }}">
+                            <option value="0">False</option>
+                            <option value="1" {{ 'selected="selected"' if job_config_line.is_active }} >True</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="limit-{{ job_config_line.job_type_name }}">
+                            <option value="0">All</option>
+                            <option value="10" {{ 'selected="selected"' if job_config_line.limit == 10 }} >10</option>
+                            <option value="20" {{ 'selected="selected"' if job_config_line.limit == 20 }} >2</option>
+                            <option value="50" {{ 'selected="selected"' if job_config_line.limit == 50 }} >50</option>
+                            <option value="100" {{ 'selected="selected"' if job_config_line.limit == 100 }} >100</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="starred_only-{{ job_config_line.job_type_name }}">
+                            <option value="0">False</option>
+                            <option value="1" {{ 'selected="selected"' if job_config_line.starred_only }} >True</option>
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <div class="panel-footer" style="text-align: right;">
+                <button type="submit" class="btn btn-primary" >
+                    Save Changes
+                </button>
+            </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

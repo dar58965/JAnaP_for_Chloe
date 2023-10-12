@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include 'compute/_header.html' %}
+
+<style>
+    .table>tbody>tr>td.table-middle,
+    th.table-middle
+     {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter {
+        float: left;
+        text-align: left;
+        padding-top: 10px;
+        padding-left: 10px;
+        width: 100%;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter label {
+        width: 100%;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+        margin-left: 0.5em;
+        display: inline-block;
+        width: 80%;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Starred Images</h4>
+        <p>
+            These images can be run with different settings from the entire dataset. For example could be used to get detailed information on a subset of images.
+        </p>
+        <p style="text-align: center;">
+            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addStarredImageModal">Add Image</button>
+        </p>
+    </div>
+</div>
+
+
+
+<table class="table">
+    {% for image_name in starred_images %}
+    <tr>
+        <td style="vertical-align: middle;">
+            <img src="/projects/contractility_waypoints/200x200/{{ image_name }}.png" />
+        </td>
+        <td style="vertical-align: middle;">{{ image_name }}</td>
+        <td style="vertical-align: middle; text-align: center;">
+            <form method="post" action="/projects/{{ project.hash }}/compute/starred">
+                <input type="hidden" name="selected_image" value="{{ image_name }}">
+                <button type="submit" class="btn btn-danger btn-xs" name="action" value="remove">Unstar/Remove</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+
+
+   <div class="modal fade" id="addStarredImageModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form role="form" method="POST" action="/projects/{{ project.hash }}/compute/starred">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Image</h4>
+      </div>
+
+        <table class="table" id="image-finder">
+        </table>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" name="action" value="add">Add</button>
+        </div>
+
+    </form>
+    </div>
+  </div>
+</div>
+
+<script>
+
+var imageList = [
+    {% for image_name in project_images %}
+    ['{{ image_name }}',
+     '<img src="/projects/contractility_waypoints/120x120/{{ image_name }}.png" />',
+     '<input type="checkbox" name="selected_image" value="{{ image_name }}">'
+     ],
+    {% endfor %}
+]
+
+$(document).ready(function() {
+  $('#image-finder').DataTable( {
+    data: imageList,
+    "deferRender": true,
+    "pageLength": 3,
+    "lengthChange": false,
+    columns: [
+      { title: "Image Name", className: "table-middle"},
+      { title: "Image", className: "table-middle", "orderable": false},
+      { title: "Select", className: "table-middle", "orderable": false}
+    ]
+  });
+});
+</script>
+
+
+{% endblock %}

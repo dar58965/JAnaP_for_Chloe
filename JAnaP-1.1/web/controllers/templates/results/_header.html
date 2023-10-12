@@ -1,0 +1,27 @@
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-6">
+        <h4>{{ project.name }} <small> > Results </small></h4>
+    </div>
+    <div class="col-sm-6">
+        <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href="/projects/{{ project.hash }}">Input</a></li>
+            <li role="presentation"><a href="/projects/{{ project.hash }}/tasks">Tasks</a></li>
+            <li role="presentation"><a href="/projects/{{ project.hash }}/compute">Runs</a></li>
+            <li role="presentation" class="active"><a href="/projects/{{ project.hash }}/results">Results</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="{{ 'active' if (page_data == null or page_data.active_nav_tab == 'index') }}">
+                <a href="/projects/{{ project.hash }}/results">Download</a></li>
+
+            <!--<li role="presentation" class="{{ 'active' if (page_data != null and page_data.active_nav_tab == 'starred') }}">
+                <a href="/projects/{{ project.hash }}/results/starred">Starred Data</a></li>-->
+
+        </ul>
+    </div>
+</div>

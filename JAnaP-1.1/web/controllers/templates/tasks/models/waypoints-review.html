@@ -1,0 +1,285 @@
+
+<style>
+
+</style>
+
+
+
+<div class="" style="width: 20%; position: fixed; right: 10px;">
+    <table class="table table-striped">
+        <tr>
+            <th>Row</th>
+            <th>Center</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for waypoint_row in image_waypoints %}
+        <tr>
+            <td>{{ waypoint_row.row }}</td>
+            <td>{{ waypoint_row.geometric_center }}</td>
+            <td>
+                <button onclick="return showWaypoints{{ waypoint_row.row }}();" id="btn_showWaypoints{{ waypoint_row.row }}" class="btn btn-xs btn-default">Show</button>
+            </td>
+            <td>
+                {% if task.status != "complete" %}
+                <form method="post">
+                    <input type="hidden" name="task_hash" value="{{ task.task_hash }}" />
+                    <input type="hidden" name="wp_row" value="{{ waypoint_row.row }}" />
+
+                    
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this?');" class="btn btn-xs btn-danger" name="task_action" value="delete">Delete</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<canvas id="image" style="margin-left: -10%;"></canvas>
+
+<script type="text/javascript" charset="utf-8">
+    var waypoints = [];
+    var paths = [];
+    var pathPreviewPoints = []
+
+    var canvas = document.getElementsByTagName('canvas')[0];
+
+    canvas.width = '{{ task.image_width }}';
+    canvas.height = '{{ task.image_height }}';
+
+    context = canvas.getContext('2d');
+    context.imageSmoothingEnabled = false;
+
+    base_image = new Image();
+    base_image.src = '{{ task.image_url }}';
+    base_image.onload = function(){
+        context.drawImage(base_image, 0, 0);
+        redraw();
+    };
+
+    var dragStart, dragged;
+    var scaleFactor = 1.1;
+
+    var lastX=canvas.width/2, lastY=canvas.height/2;
+
+    // Adds context.getTransform() - returns an SVGMatrix
+    // Adds context.transformedPoint(x,y) - returns an SVGPoint
+    function trackTransforms(context){
+        var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+        var xform = svg.createSVGMatrix();
+        context.getTransform = function(){ return xform; };
+
+        var savedTransforms = [];
+        var save = context.save;
+        context.save = function(){
+            savedTransforms.push(xform.translate(0,0));
+            return save.call(context);
+        };
+        var restore = context.restore;
+        context.restore = function(){
+            xform = savedTransforms.pop();
+            return restore.call(context);
+        };
+
+        var scale = context.scale;
+        context.scale = function(sx,sy){
+            xform = xform.scaleNonUniform(sx,sy);
+            return scale.call(context,sx,sy);
+        };
+        var rotate = context.rotate;
+        context.rotate = function(radians){
+            xform = xform.rotate(radians*180/Math.PI);
+            return rotate.call(context,radians);
+        };
+        var translate = context.translate;
+        context.translate = function(dx,dy){
+            xform = xform.translate(dx,dy);
+            return translate.call(context,dx,dy);
+        };
+        var transform = context.transform;
+        context.transform = function(a,b,c,d,e,f){
+            var m2 = svg.createSVGMatrix();
+            m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
+            xform = xform.multiply(m2);
+            return transform.call(context,a,b,c,d,e,f);
+        };
+        var setTransform = context.setTransform;
+        context.setTransform = function(a,b,c,d,e,f){
+            xform.a = a;
+            xform.b = b;
+            xform.c = c;
+            xform.d = d;
+            xform.e = e;
+            xform.f = f;
+            return setTransform.call(context,a,b,c,d,e,f);
+        };
+        var pt  = svg.createSVGPoint();
+        context.transformedPoint = function(x,y){
+            pt.x=x; pt.y=y;
+            return pt.matrixTransform(xform.inverse());
+        }
+    }
+
+    trackTransforms(context);
+
+    function redraw() {
+        // Clear the entire canvas
+        var p1 = context.transformedPoint(0,0);
+        var p2 = context.transformedPoint(canvas.width, canvas.height);
+        context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
+
+        context.drawImage(base_image, 0, 0);
+
+        // Draw cell
+        // var w = cellEndX - cellStartX;
+        // var h = cellEndY - cellStartY;
+        //var offsetX = (w < 0) ? w : 0;
+        //var offsetY = (h < 0) ? h : 0;
+        //var width = Math.abs(w);
+        //var height = Math.abs(h);
+
+        //context.beginPath();
+        //context.rect(cellStartX + offsetX, cellStartY + offsetY, width, height);
+
+
+        //context.fillStyle = "yellow";
+        //context.fill();
+        //context.lineWidth = 2;
+        //context.strokeStyle = 'white';
+        //context.stroke();
+
+        /*
+        if (wKeyPressed) {
+            // Show waypoint
+            var pt = context.transformedPoint(lastX,lastY);
+
+            roundX = Math.round(pt.x);
+            roundY = Math.round(pt.y);
+            context.fillStyle = "#FF00FF";
+            context.fillRect(roundX, roundY, 1, 1);
+        }
+        */
+
+        // Draw paths
+        for (var path_idx = 0; path_idx < paths.length; path_idx++) {
+            points = paths[path_idx];
+            for (var point_idx = 0; point_idx < points.length; point_idx++) {
+                point = points[point_idx];
+                context.fillStyle = "#FFFFFF";
+                context.fillRect(point[0], point[1], 1, 1);
+            }
+        }
+
+        // Draw waypoints
+        for (var i = 0; i < waypoints.length; i++) {
+            waypoint = waypoints[i];
+            roundX = Math.round(waypoint.x);
+            roundY = Math.round(waypoint.y);
+            context.fillStyle = "#FF00FF";
+            context.fillRect(roundX, roundY, 1, 1);
+        }
+
+        // Draw preview
+        points = pathPreviewPoints;
+        for (var point_idx = 0; point_idx < points.length; point_idx++) {
+            point = points[point_idx];
+            context.fillStyle = "#ADD8E6";
+            context.fillRect(point[0], point[1], 1, 1);
+        }
+    }
+
+    canvas.addEventListener('mousemove',function(evt){
+        lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+        lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+        dragged = true;
+        if (dragStart){
+            var pt = context.transformedPoint(lastX,lastY);
+            context.translate(pt.x-dragStart.x,pt.y-dragStart.y);
+            redraw();
+        }
+
+    }, false);
+
+
+    function startDrag(event) {
+        lastX = event.offsetX || (event.pageX - canvas.offsetLeft);
+        lastY = event.offsetY || (event.pageY - canvas.offsetTop);
+        dragStart = context.transformedPoint(lastX,lastY);
+        dragged = false;
+    }
+
+    canvas.addEventListener('mouseup', function(evt){
+        dragStart = null;
+        //if (!dragged) zoom(evt.shiftKey ? -1 : 1 );
+    }, false);
+
+    function handleClick(event) {
+        startDrag(event);
+    }
+
+    canvas.addEventListener("mousedown", handleClick, false);
+
+    var zoom = function(clicks){
+        var pt = context.transformedPoint(lastX,lastY);
+        context.translate(pt.x,pt.y);
+        var factor = Math.pow(scaleFactor, clicks);
+        context.scale(factor, factor);
+        context.translate(-pt.x, -pt.y);
+        redraw();
+    };
+
+    var handleScroll = function(evt){
+        var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 0;
+        if (delta) zoom(delta);
+        return evt.preventDefault() && false;
+    };
+
+    canvas.addEventListener('DOMMouseScroll',handleScroll,false);
+    canvas.addEventListener('mousewheel',handleScroll,false);
+
+    function addWaypoint(roundX, roundY)
+    {
+        waypoints.push({x: roundX, y: roundY});
+
+        if (waypoints.length >=2) {
+            waypoint_1 = waypoints[waypoints.length - 2];
+            waypoint_2 = waypoints[waypoints.length - 1];
+
+            $.post("/projects/tasks/waypoints/pathfinder", {
+                        project_hash: "{{ project.hash }}",
+                        task_hash: "{{ task.hash }}",
+                        point_1_x: waypoint_1.x,
+                        point_1_y: waypoint_1.y,
+                        point_2_x: waypoint_2.x,
+                        point_2_y: waypoint_2.y
+                    },
+                    function( data ) {
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data[i]);
+                        }
+
+                        paths.push(data);
+                        redraw();
+                    }
+            );
+        }
+    }
+
+    {% for waypoint_row in image_waypoints %}
+    function showWaypoints{{ waypoint_row.row }}() {
+        waypoints = [];
+        paths = [];
+        pathPreviewPoints = [];
+
+        {% for waypoint in waypoint_row.waypoints %}
+        addWaypoint({{ waypoint[1] }}, {{ waypoint[0] }});
+        {% endfor %}
+    }
+    {% endfor %}
+
+    $( document ).ready(function() {
+        
+    });
+
+</script>

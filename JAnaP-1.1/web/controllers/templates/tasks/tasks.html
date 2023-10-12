@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<style>
+    table.metrics_table {
+
+    }
+
+    table.metrics_table th {
+        width: 25%;
+        text-align: center;
+    }
+
+    table.metrics_table td {
+        text-align: center;
+    }
+    
+
+</style>
+
+{% include 'tasks/_header.html' %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ tasks_status_metrics.progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ tasks_status_metrics.progress }}%;">
+                {{ tasks_status_metrics.progress }}%
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table metrics_table">
+            <tr>
+                <th>Open</th>
+                <th>In Progress</th>
+                <th>Complete</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+                <td>{{ tasks_status_metrics.open }}</td>
+                <td>{{ tasks_status_metrics.wip }}</td>
+                <td>{{ tasks_status_metrics.done }}</td>
+                <td>{{ tasks_status_metrics.total }}</td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <span href="#" class="btn" style="cursor: default;">Status Filter: </span>
+            <a href="/projects/{{ project.hash }}/tasks?status=all" class="btn {{ 'btn-primary' if status_filter == 'all' else 'btn-default' }}">All</a>
+            <a href="/projects/{{ project.hash }}/tasks?status=open" class="btn {{ 'btn-primary' if status_filter == 'open' else 'btn-default' }}">Open</a>
+            <a href="/projects/{{ project.hash }}/tasks?status=in-progress" class="btn {{ 'btn-primary' if status_filter == 'in-progress' else 'btn-default' }}">In Progress</a>
+            <a href="/projects/{{ project.hash }}/tasks?status=complete" class="btn {{ 'btn-primary' if status_filter == 'complete' else 'btn-default' }}">Done</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Image Name</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.image_file_name }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>
+                        <a href="/projects/{{ project.hash }}/tasks/{{ task.task_hash }}">View Task</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

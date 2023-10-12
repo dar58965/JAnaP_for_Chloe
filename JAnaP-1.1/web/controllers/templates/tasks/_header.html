@@ -1,0 +1,14 @@
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-6">
+        <h4><a href="/projects/{{ project.hash }}">{{ project.name }}</a> <small> > Tasks </small></h4>
+    </div>
+    <div class="col-sm-6">
+        <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href="/projects/{{ project.hash }}">Input</a></li>
+            <li role="presentation" class="active"><a href="/projects/{{ project.hash }}/tasks">Tasks</a></li>
+            <li role="presentation"><a href="/projects/{{ project.hash }}/compute">Runs</a></li>
+            <li role="presentation"><a href="/projects/{{ project.hash }}/results">Results</a></li>
+        </ul>
+    </div>
+</div>

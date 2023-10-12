@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include 'compute/_header.html' %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Image Data (<kbd>imdata</kbd>)</h4>
+        <p>
+            This step processes the images before they are used for any calculations and calculates image level
+            information. If you need to add a computation that happens at the image level that is not dependent on
+            waypoints existing this is the best place for it.
+        </p>
+
+        <ul>
+            <li>Calculates image level values for files like width, height, intensity bins, etc</li>
+            <li>Removes legends from the bottom corners</li>
+            <li>Converts image to intensity map</li>
+            <li>Creates image cost map</li>
+        </ul>
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Trace (<kbd>trace</kbd>)</h4>
+        <p>
+            Generates perimeters from the waypoints. If this task is modified, you should delete all artifacts aside
+            from waypoints to ensure consistency. Generates cell indexes by finding the centroid of the cell.
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Shape Factors (<kbd>shapes</kbd>)</h4>
+        <p>
+            Calculates shape factors for each cell.
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Fast Class (<kbd>fastclass</kbd>)</h4>
+        <p>
+            Classifies each junction and calculates coverage values (%) for each classification. This method runs 
+            significantly faster than jclass but calculates less "descriptive" values. The output is on a per cell basis. 
+        </p>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Junction Class (<kbd>jclass</kbd>)</h4>
+        <p>
+            Uses same classification criteria as fastclass but calculates significantly more detail such as the start and end index, 
+            length, aspect ratio, tip-to-tip distance, etc. for each junction feature coinciding with the cell path. 
+            The output is on a per junction/feature basis.            
+        </p>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

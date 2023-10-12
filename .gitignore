@@ -1,0 +1,21 @@
+
+docs/.ipynb_checkpoints/*
+.ipynb_checkpoints/
+
+.idea/
+
+
+!example.conf
+
+bin/ImageJ/
+bin/packages/
+scratch/
+venv/
+
+*.pyc
+
+web/controllers/static/tmp/
+
+node.conf.local
+
+# *.conf

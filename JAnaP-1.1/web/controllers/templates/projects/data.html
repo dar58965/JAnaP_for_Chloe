@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    {% include 'projects/_header.html' %}
+
+    <style>
+
+    table.listing > tbody > tr > td:first-child {
+        width: 40%;
+    }
+
+    table.listing > tbody > tr > td:not(:first-child) {
+        width: 20%;
+        text-align: center;
+    }
+
+    table.listing tr > th:not(:first-child) {
+        text-align: center;
+    }
+
+    </style>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>{{ project_data["variant_name"] }}</h4>
+            <p>
+                If you configure the variant you will only need to generate a perimeter path for your primary variant whenever images share a file root. <a href="/projects/{{project['hash']}}/config#variant">Click here</a> to add/remove stains.
+            </p>
+
+            <table class="table listing">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th></th>
+                        <th>Image Count</th>
+                        <th>Cell Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for variant_value, image_count in project_data['variant_data'].iteritems() %}
+                    <tr>
+                        <td>{{variant_value}}</td>
+                        <td></td>
+                        <td>{{image_count}}</td>
+                        <td>{{ project_data['cell_variant_data'].get(variant_value, 0) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    {% for dimension_name, data in project_data.dimension_counts.iteritems() %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>{{ dimension_name }}</h4>
+            <p>
+
+            </p>
+
+            <table class="table listing">
+                <thead>
+                    <tr>
+                        <th>{{ dimension_name }}</th>
+                        <th></th>
+                        <th>Image Count</th>
+                        <th>Cell Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for dimension_value, dimension_count in data.iteritems() %}
+                    <tr>
+                        <td>{{dimension_value}}</td>
+                        <td></td>
+                        <td>{{dimension_count}}</td>
+                        <td>{{ project_data['cell_dimension_counts'].get(dimension_name, {}).get(dimension_value, 0) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,274 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    {% include 'projects/_header.html' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Variant</h3>
+            </div>
+            <div class="panel-body">
+                <p style="color: #999999">This configuration classifies files as different versions of the same image. You will only need to do waypointing, sentry marking, etc once and that artifact will be shared between both objects. Make sure that only one of the configured values shows up in each filename.</p>
+    
+                <form method="post" action="/projects/{{ project.hash }}/config/variant" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Variant Name</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="variant_name" placeholder="i.e. Stain" value="{{ configuration.variant.name }}" />
+                                </div>
+                            </div>
+                            
+                            {% if configuration.variant.get("values", []) | length > 0 %}
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Primary Value</label>
+                                <div class="col-sm-9">
+                                {% for variant_value in configuration.variant.get("values") %}
+                                <div class="radio">
+                                    <label>
+                                    <input type="radio" name="variant_primary" value="{{ variant_value }}" {{ 'checked="checked"' if configuration.variant.primary_value == variant_value }} />
+                                    {{ variant_value }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"></label>
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                </div>
+                            </div>
+                            
+                            {% if configuration.variant.get("name", "") | length > 0 %}
+                            <hr />
+
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-12 control-label">Add Value</label>
+                                
+                                <div class="col-sm-7 col-xs-9">
+                                    <input class="form-control" name="variant_value" placeholder="GFP, TxRed, etc" />
+                                </div>
+
+                                <div class="col-sm-2 col-xs-3">
+                                    <button type="submit" class="btn btn-primary" name="action" value="add">Add</button>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if configuration.variant.get("values", []) | length > 0 %}
+                            <hr />
+
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-12 control-label">Delete Value</label>
+
+                                <div class="col-sm-7 col-xs-9">
+                                    <select class="form-control" name="variant_selected">
+                                        <option>Select value to remove</option>
+                                        {% for variant_value in configuration.variant.get("values") %}
+                                            <option value="{{ variant_value}}">{{ variant_value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2 col-xs-3">
+                                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dimensions</h3>
+                </div>
+                <div class="panel-body">
+                    <p style="color: #999999">These values are filled in based on criteria. There can only be one value per image per dimension. </p>
+                </div>
+
+                <table class="table">
+                    {% for dimension_name, dimension_value in configuration.dimensions.iteritems() %}
+                    <tr>
+                        <td style="padding-left: 15px">
+                            <a href="/projects/{{ project.hash }}/dimensions/{{ dimension_name }}">{{ dimension_name }}</a>
+                        </td>
+                        <td>{{ dimension_value.get("type") }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addDimensionModal">
+                        Add Dimension
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Parameters</h3>
+                </div>
+                <div class="panel-body">
+                    <p style="color: #999999"></p>
+                    <ol style="color: #999999">
+                    </ol>
+
+
+                </div>
+
+                <form method="post" action="/projects/{{ project.hash }}/config/parameters">
+
+                <table class="table">
+                    <tr>
+                        <th style="border-top: none;"></th>
+                        <th style="border-top: none;"></th>
+                        <th style="border-top: none;" width="20%"></th>
+                        <th style="border-top: none;"></th>
+                        <th style="border-top: none;" width="20%"></th>
+                        <th style="border-top: none;"></th>
+                    </tr>
+
+                    {% for parameter_name, parameter_data in configuration.parameters.iteritems() %}
+                    <tr style="outline: none:">
+                        <th style="padding-left: 15px; vertical-align: middle;">
+                            <code>{{ parameter_name }}</code>
+                        </th>
+                        <td style="vertical-align: middle;">
+                            <small>
+                                {{ parameter_data.get("description") }}
+                            </small>
+                        </td>
+
+                        <td style="">
+                            <select class="form-control add_value_map" name="map_name-{{ parameter_name }}">
+                                <option value="">Select Criteria</option>
+                                <optgroup label="Variants">
+                                    {% for variant_value in configuration.variant.get("values") %}
+                                        <option value="variant:{{ variant_value}}">{{ variant_value }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                                <!--
+                                <optgroup label="Dimensions">
+                                    {% for dimension_name, dimension_value in configuration.dimensions.iteritems() %}
+                                        <option value="dimension:{{ dimension_name}}">{{ dimension_name }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                                -->
+                                <optgroup label="Image Size">
+                                    <option value="image-size:1024">1024x1024</option>
+                                    <option value="image-size:2048">2048x2048</option>
+                                </optgroup>
+                            </select>
+
+                        </td>
+                        <td style="text-align: center; vertical-align: middle;"><i class="fa fa-arrow-right"></i></td>
+                        <td>
+                            <input class="form-control" name="map_value-{{ parameter_name }}" value="0" />
+                        </td>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <button type="submit" class="btn btn-success btn-xs" name="action" value="add-{{ parameter_name }}">Add</button>
+                        </td>
+                    </tr>
+
+                        {% for map_name, map_value in parameter_data.get("value_map", {}).iteritems() %}
+                            <tr>
+                                <td style="border-top: none;"></td>
+                                <td style="border-top: none;"></td>
+                                <td style="border-top: none; text-align: center; vertical-align: middle;">
+                                    <code>{{ map_name }}</code>
+                                </td>
+                                <td style="border-top: none; text-align: center; vertical-align: middle;"><i class="fa fa-arrow-right"></i></td>
+                                <td style="border-top: none; vertical-align: middle;">
+                                    <code>{{ map_value }}</code>
+                                </td>
+                                <td style="border-top: none; text-align: center; vertical-align: middle;">
+                                    <button type="submit" class="btn btn-danger btn-xs" name="action" value="delete---{{ parameter_name }}---{{ map_name }}">Delete</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <td style="border-top: none;"></td>
+                            <td style="border-top: none;"></td>
+                            <td style="border-top: none; text-align: center; vertical-align: middle;"><code>*</code></td>
+                            <td style="border-top: none; text-align: center; vertical-align: middle;"><i class="fa fa-arrow-right"></i></td>
+                            <td style="border-top: none;"><input class="form-control" name="default-value-{{ parameter_name }}" value="{{ parameter_data.get("default_value") }}" /></td>
+                            <td style="text-align: center; vertical-align: middle; border-top: none;">
+                                <button type="submit" class="btn btn-primary btn-xs" name="action" value="save">Save</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="">
+                        Save
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<div class="modal fade" id="addDimensionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form role="form" method="POST" action="/projects/{{ project.hash }}/dimensions">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Create Dimension</h4>
+      </div>
+      <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label">Dimension Name</label>
+                <div>
+                    <input type="text" class="form-control" name="dimension_name" value="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Dimension Type</label>
+                <div>
+                    <select class="form-control" name="dimension_type">
+                        <option>String Match</option>
+                        <option>Date Parse</option>
+                    </select>
+                </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+{% endblock %}

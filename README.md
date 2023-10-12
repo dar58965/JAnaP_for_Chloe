@@ -1,5 +1,5 @@
 # Run Instructions 
-These directions assume Windows Powershell 6+
+1. Set-up (Use cmd or Powershell)
 
 |Make sure Git and Docker are installed on machine. All machines need them anyways.|
 ```
@@ -11,34 +11,23 @@ Git and Docker distributions:
 https://gitforwindows.org/
 https://docs.docker.com/desktop/install/windows-install/
 
-### Make sure WSL 2 is turned on as backend to allow Docker to use Linux distros as base image
-
-### Open Windows Powershell or cmd
-
-## Git clone Docker image
+2. Git clone Docker image
 ```
 git clone https://github.com/dar58965/JAnaP_for_Chloe.git janap-ubuntu-docker
 
 cd janap-ubuntu-docker
 ```
 
-#### Start Docker Engine by opening desktop application
-
-## Docker build command. Creates docker image
+3.  Docker build command. Creates docker image
 ```
 docker build -t janap-jupyter-linux .
 ```
-
-## Git Clone original repo
+4. Docker run to initialize Junction Analyzer Program
 ```
-cd ..
-
-git clone https://github.com/StrokaLab/JAnaP.git JAnaP
-
-cd janap-ubuntu-docker
+docker run -p 5000:5000 janap-jupyter-linux
 ```
 
-#### Basically, this command initializes the docker image and connects Port 4000 of host computer with Port 80 of Docker. Bind mount
+5. Access program in browser
 ```
-docker run -p 5000:5000 -v C:/Users/dar58/JAnaP-master:/app janap-jupyter-linux
+localhost:5000
 ```
