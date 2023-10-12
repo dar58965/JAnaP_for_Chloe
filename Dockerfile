@@ -36,8 +36,7 @@ RUN mkdir -p /app/bin/packages
 RUN curl -fsSL -O https://bootstrap.pypa.io/pip/2.7/get-pip.py
 RUN python2.7 get-pip.py --no-python-version-warning && rm -f get-pip.py && apt-get clean
 
-
-#Gather JAnaP from the og babes and place in packages folder
+#Don't remember exactly what this is from but junction analyzer wants it it shall have it
 RUN wget -P /app/bin/packages https://s3.amazonaws.com/umd-cells/packages/ij150-linux64-java8.zip && \
     unzip /app/bin/packages/ij150-linux64-java8.zip -d /app/bin/packages
 
