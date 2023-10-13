@@ -33,11 +33,8 @@ localhost:5000
 ```
 
 # Clean Up When Done
-- ctrl + C to stop application run. ctrl + D to exit from Docker container if ran in interactive mode (docker run -it). 
+- ```ctrl + C``` to stop application run. ```ctrl + D``` to exit from Docker container if ran in interactive mode (```-it```). 
 
-- ```Docker ps -a``` to view current images. 
-- To remove remaining unused Docker image and containers: 
+- To view all current images: ```Docker ps -a``` 
 
-```
-docker rmi -f $(docker images -f "dangling=true" -q)
-```
+- To remove container: ```docker rm -v {container name}```
