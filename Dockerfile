@@ -53,4 +53,5 @@ RUN jupyter nbextension enable --py widgetsnbextension
 EXPOSE 5000
 
 WORKDIR /app/web
-CMD ["nohup", "python2.7", "application.py", ">", "log.txt", "2>&1", "&"]
+
+CMD nohup python2.7 application.py > log.txt 2>&1 & /bin/bash
