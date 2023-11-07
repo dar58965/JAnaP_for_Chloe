@@ -36,3 +36,5 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#mahotas
 ```
 
 #### Because the Docker image uses Ubuntu as a base image, the software can be run from Windows Powershell without any need for WSL Ubuntu. Just run it from the Powershell. 
+
+God this needs a volume mount for the image. The problem is the like, later date shit

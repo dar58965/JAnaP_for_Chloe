@@ -6,6 +6,11 @@
 git --version
 docker --version
 ```
+|Check if you have any containers running the janap-jupyter-linux image. |
+- List containers: ```docker ps -a```
+- If container with the 'janap-jupyter-linux' image exists: ```docker rm -v {container_name}```
+- If container exists and is running: ```docker stop {container name}``` then ```docker rm -v {container name}```
+- Run ```docker ps -a``` again to make sure the container is gone. 
 
 Git and Docker distributions:
 https://gitforwindows.org/
@@ -31,6 +36,7 @@ For interactive mode:
 ```
 docker run -it -p 5000:5000 -p 8888:8888 janap-jupyter-linux
 ```
+
 5. Access program in browser
 ```
 localhost:8888 for jupyter notebook
@@ -40,6 +46,6 @@ localhost:5000 for JAnaP
 # Clean Up When Done
 
 
-- To view all current images: ```Docker ps -a``` 
+- To view all current images: ```docker ps -a``` 
 
-- To remove container: ```docker stop -v {container name}``` then ```docker rm -v {container name}```
+- To remove container: ```docker stop {container name}``` then ```docker rm -v {container name}```
