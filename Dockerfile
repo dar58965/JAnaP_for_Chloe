@@ -56,7 +56,7 @@ RUN apt-get update && apt-get install -y dos2unix && \
 
 COPY JAnaP-1.1 /app/
 
-COPY images /tmp/
+COPY images /app/
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
 
