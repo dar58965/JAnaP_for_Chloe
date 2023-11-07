@@ -12,6 +12,9 @@ docker --version
 - If container exists and is running: ```docker stop {container name}``` then ```docker rm -v {container name}```
 - Run ```docker ps -a``` again to make sure the container is gone. 
 
+|If you have a forked repository: |
+- Sync your fork with the master version using ```gh repo sync dar58965/JAnaP_for_Chloe -b {Forked name}```
+
 Git and Docker distributions:
 https://gitforwindows.org/
 https://docs.docker.com/desktop/install/windows-install/
