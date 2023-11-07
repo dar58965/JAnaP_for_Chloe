@@ -24,21 +24,22 @@ docker build -t janap-jupyter-linux .
 ```
 4. Docker run to initialize Junction Analyzer Program
 ```
-docker run -p 8888:8888 janap-jupyter-linux
+docker run -p 5000:5000 -p 8888:8888 janap-jupyter-linux
 ```
 
 For interactive mode: 
 ```
-docker run -it -p 8888:8888 janap-jupyter-linux
+docker run -it -p 5000:5000 -p 8888:8888 janap-jupyter-linux
 ```
 5. Access program in browser
 ```
-localhost:8888
+localhost:8888 for jupyter notebook
+localhost:5000 for JAnaP
 ```
 
 # Clean Up When Done
-- ```ctrl + C``` to stop application run. ```ctrl + D``` to exit from Docker container if ran in interactive mode (```-it```). 
+
 
 - To view all current images: ```Docker ps -a``` 
 
-- To remove container: ```docker rm -v {container name}```
+- To remove container: ```docker stop -v {container name}``` then ```docker rm -v {container name}```
