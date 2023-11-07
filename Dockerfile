@@ -46,14 +46,21 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt && \
     rm -f requirements.txt
 
+COPY janap_services.sh /app/janap_services.sh
+RUN chmod +x /app/janap_services.sh
+
+RUN apt-get update && apt-get install -y dos2unix && \
+    dos2unix /app/janap_services.sh && \
+    apt-get --purge remove -y dos2unix && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY JAnaP-1.1 /app/
 
 COPY images /tmp/
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
 
-COPY janap_services.sh /app/janap_services.sh
-RUN chmod +x /app/janap_services.sh
+
 
 EXPOSE 5000
 EXPOSE 8888
