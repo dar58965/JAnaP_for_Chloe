@@ -52,12 +52,12 @@ COPY images /tmp/
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
 
-COPY services.sh /app/services.sh
-RUN chmod +x /app/services.sh
+COPY janap_services.sh /app/janap_services.sh
+RUN chmod +x /app/janap_services.sh
 
 EXPOSE 5000
 EXPOSE 8888
 
 
-CMD ["/app/services.sh"]
+CMD ["/app/janap_services.sh"]
 
