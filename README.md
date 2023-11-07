@@ -14,6 +14,7 @@ docker --version
 
 |If you have a forked repository: |
 - Sync your fork with the master version using ```gh repo sync dar58965/JAnaP_for_Chloe -b {Forked name}```
+You should do this every once in awhile. The Master version might have gotten better!
 
 Git and Docker distributions:
 https://gitforwindows.org/
