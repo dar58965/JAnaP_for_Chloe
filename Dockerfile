@@ -59,5 +59,5 @@ EXPOSE 5000
 EXPOSE 8888
 
 
-CMD ["bash", "/app/janap_services.sh"]
+CMD ["bin/bash", "/app/janap_services.sh"]
 
