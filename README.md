@@ -24,16 +24,16 @@ docker build -t janap-jupyter-linux .
 ```
 4. Docker run to initialize Junction Analyzer Program
 ```
-docker run -p 5000:5000 janap-jupyter-linux
+docker run -p 8888:8888 janap-jupyter-linux
 ```
 
 For interactive mode: 
 ```
-docker run -it -p 5000:5000 janap-jupyter-linux
+docker run -it -p 8888:8888 janap-jupyter-linux
 ```
 5. Access program in browser
 ```
-localhost:5000
+localhost:8888
 ```
 
 # Clean Up When Done

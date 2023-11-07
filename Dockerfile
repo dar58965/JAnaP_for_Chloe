@@ -7,10 +7,10 @@ LABEL maintainer="Davide Rossotto"
 #g++-multilib is C++ compiler for mahotas wheel configurations
 #apt-get clean + rm -rf var capabilities makes it lighter
 RUN apt-get update && \
-    apt-get install -y python2.7 && \
     apt-get install -y wget && \
     apt-get install -y unzip && \
     apt-get install -y curl && \
+    apt-get install -y python2.7 && \
     apt-get install -y python2.7-dev && \
     apt-get install -y g++-multilib && \
     apt-get install -y libglib2.0.0 && \
@@ -47,11 +47,16 @@ RUN pip install -r requirements.txt && \
     rm -f requirements.txt
 
 COPY JAnaP-1.1 /app/
+
+COPY images /tmp/
 #Jupyter notebook step
 RUN jupyter nbextension enable --py widgetsnbextension
 
+COPY services.sh /app/services.sh
+RUN chmod +x /app/services.sh
+
 EXPOSE 5000
+EXPOSE 8888
 
-WORKDIR /app/web
 
-CMD nohup python2.7 application.py > log.txt 2>&1 & /bin/bash
+CMD ["/app/services.sh"]
