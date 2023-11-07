@@ -59,4 +59,5 @@ EXPOSE 5000
 EXPOSE 8888
 
 
-CMD ["/app/services.sh"]
+#CMD ["/app/services.sh"]
+
