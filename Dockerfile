@@ -49,6 +49,7 @@ RUN pip install -r requirements.txt && \
 COPY janap_services.sh /app/janap_services.sh
 RUN chmod +x /app/janap_services.sh
 
+#Convert shell script from DOS to Unix
 RUN apt-get update && apt-get install -y dos2unix && \
     dos2unix /app/janap_services.sh && \
     apt-get --purge remove -y dos2unix && \
