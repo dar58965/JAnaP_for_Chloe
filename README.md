@@ -20,18 +20,23 @@ Git and Docker distributions:
 https://gitforwindows.org/
 https://docs.docker.com/desktop/install/windows-install/
 
-2. Git clone Docker image
+2. Delete janap-ubuntu-docker directory
+```
+rmdir /s /q janap-ubuntu-docker
+```
+
+3. Git clone Docker image
 ```
 git clone https://github.com/dar58965/JAnaP_for_Chloe.git janap-ubuntu-docker
 
 cd janap-ubuntu-docker
 ```
 
-3.  Docker build command. Creates docker image
+4.  Docker build command. Creates docker image
 ```
 docker build -t janap-jupyter-linux .
 ```
-4. Docker run to initialize Junction Analyzer Program
+5. Docker run to initialize Junction Analyzer Program
 ```
 docker run -p 5000:5000 -p 8888:8888 janap-jupyter-linux
 ```
@@ -41,7 +46,7 @@ For interactive mode:
 docker run -it -p 5000:5000 -p 8888:8888 janap-jupyter-linux
 ```
 
-5. Access program in browser
+6. Access program in browser
 ```
 localhost:8888 for jupyter notebook
 localhost:5000 for JAnaP
