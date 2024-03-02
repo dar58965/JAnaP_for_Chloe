@@ -220,7 +220,7 @@ class Project():
         if len(self.__parameters[parameter]["value_map"].keys()) == 0:
             return self.__parameters[parameter]["default_value"]
 
-        variant_string = "variant:" + entity_row.get("variant", "")
+        variant_string = "variant:" + str(entity_row.get("variant", "")) #Concatenation error when no variant established
 
         if variant_string in self.__parameters[parameter]["value_map"].keys():
             return self.__parameters[parameter]["value_map"].get(variant_string)

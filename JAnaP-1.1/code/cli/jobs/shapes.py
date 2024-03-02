@@ -108,7 +108,7 @@ class Shapes(BaseJob):
         w, h = image_intensity.shape
 
         conversion_factor = \
-            self.__project.get_parameter("image_scale", job_entity_row, w)
+            self.__project.get_parameter("image_scale", job_entity_row, w) #job_entity_row has empty "variant"
 
         shape_calculator = cells.shapes.CellShapes(image_intensity,
                                                    perimeter_path)
